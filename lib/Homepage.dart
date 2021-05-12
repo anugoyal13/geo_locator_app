@@ -20,16 +20,32 @@ class _HomepageState extends State<Homepage> {
   //   super.initState();
   //   getCurrentLocation();
   // }
+  var locationMessage = '';
+  String latitude;
+  String longitude;
   Position _position;
   StreamSubscription<Position> _streamSubscription;
   Address _address;
   @override
   void initState(){
      super.initState();
-      var locationOptions=LocationOptions(accuracy:LocationAccuracy.high,distanceFilter: 10);
+      var locationOptions= LocationOptions(accuracy:LocationAccuracy.high,distanceFilter: 10);
      _streamSubscription=Geolocator.getPositionStream().listen((Position position) {
        setState(() {
          print(position);
+         var lat = position.latitude;
+         var long = position.longitude;
+         latitude = "$lat";
+         longitude = "$long";
+         latitude = "$lat";
+         longitude = "$long";
+
+         setState(() {
+           locationMessage = "Latitude: $lat and Longitude: $long";
+           print(latitude.toString());
+         });
+
+         //String cords=position;
          final coordinates=new Coordinates(position.latitude, position.longitude);
          convertCoordinatesToAddress(coordinates).then((value)=>_address=value);
        });
@@ -67,9 +83,10 @@ class _HomepageState extends State<Homepage> {
         child: Column(
           children: [
             SizedBox(height:50),
-            Text("Location lat:${_position?.latitude??'-'},lon:${_position?.longitude??'-'}"),
+            //Text("Location lat:${_position?.latitude??'-'},lon:${_position?.longitude??'-'}"),
+            Text(locationMessage),
             SizedBox(height:20),
-            Text("aAddress from Coordinates"),
+            Text("Address from Coordinates"),
             SizedBox(height:20),
             Text("${_address?.addressLine??'-'}"),
           ],
