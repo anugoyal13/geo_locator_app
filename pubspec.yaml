@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   geocoder:
   geolocator:
+  intl: ^0.16.1
 
 
 dev_dependencies:
